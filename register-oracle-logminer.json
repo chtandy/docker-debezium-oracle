@@ -1,0 +1,20 @@
+{
+  "name": "inventory-connector",
+  "config": {
+    "connector.class" : "io.debezium.connector.oracle.OracleConnector",
+    "tasks.max" : "1",
+    "database.server.name" : "it_oracle_server",
+    "database.hostname" : "10.90.9.245",
+    "database.port" : "1521",
+    "database.user" : "logminer",
+    "database.password" : "logminer",
+    "database.connection.adapter" : "logminer",
+    "database.history.kafka.bootstrap.servers" : "10.1.5.14:9093",
+    "database.history.kafka.topic": "oracle_history_topic",
+    "database.dbname" : "EMESHY",
+    "schema.include.list": "EMESP",
+    "table.include.list": "EMESP.TP_SN_LOG",
+    "event.processing.failure.handling.mode": "fail",
+    "snapshot.mode": "initial"
+  }
+}

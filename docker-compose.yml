@@ -1,0 +1,21 @@
+version: '2'
+services:
+  connect:
+    image: debezium/connect-with-oracle-jdbc:${DEBEZIUM_VERSION}
+    build:
+      context: debezium-with-oracle-jdbc
+      args:
+        DEBEZIUM_VERSION: ${DEBEZIUM_VERSION}
+    ports:
+     - 8083:8083
+     - 5005:5005
+    environment:
+     - BOOTSTRAP_SERVERS=10.1.5.14:9093
+     - GROUP_ID=1
+     - CONFIG_STORAGE_TOPIC=oracle_connect_configs
+     - OFFSET_STORAGE_TOPIC=oracle_connect_offsets
+     - STATUS_STORAGE_TOPIC=oracle_connect_statuses
+     - LD_LIBRARY_PATH=/instant_client
+     - KAFKA_DEBUG=true
+     - DEBUG_SUSPEND_FLAG=n
+     - JAVA_DEBUG_PORT=0.0.0.0:5005
