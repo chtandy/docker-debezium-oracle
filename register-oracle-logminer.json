@@ -14,7 +14,8 @@
     "database.dbname" : "EMESHY",
     "schema.include.list": "EMESP",
     "table.include.list": "EMESP.TP_SN_LOG",
-    "event.processing.failure.handling.mode": "fail",
+    "log.mining.strategy":"online_catalog",
+    "event.processing.failure.handling.mode": "skip",
     "snapshot.mode": "initial"
   }
 }
