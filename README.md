@@ -74,7 +74,32 @@ When the snapshot mode is set to the default, the connector completes the follow
 - docker-compose build
 - docker-compose up -d
 - `curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-oracle-logminer.json`
+- or
+```
+curl -H "Content-Type: application/json" -X POST -d  '{
+    "name": "source333", 
+    "config": {
+     "connector.class" : "io.debezium.connector.oracle.OracleConnector",
+     "tasks.max" : "1",
+     "database.server.name" : "oracle_service",
+     "database.hostname" : "localhost",
+     "database.port" : "1521",
+     "database.user" : "family",
+     "database.password" : "zyhcdc",
+     "database.dbname" : "helowin",
+     "table.include.list": "family.student_info",
+     "database.history.kafka.bootstrap.servers" : "localhost:9092",
+     "database.history.kafka.topic": "schema-changes.inventory222",
+     "event.processing.failure.handling.mode": "skip",
+     "log.mining.strategy":"online_catalog",
+     "database.serverTimezone":"UTC",
+     "database.serverTimezone":"Asia/Shanghai"
+  }
+}' http://localhost:8083/connectors/
+```
 
-
-
+- 查看任務狀況
+```
+curl http://localhost:8083/connectors/source333/status
+```
 
