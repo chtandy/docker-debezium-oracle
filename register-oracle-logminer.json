@@ -4,7 +4,7 @@
     "connector.class" : "io.debezium.connector.oracle.OracleConnector",
     "tasks.max" : "1",
     "database.server.name" : "it_oracle_server",
-    "database.hostname" : "10.90.9.245",
+    "database.hostname" : "10.90.1.207",
     "database.port" : "1521",
     "database.user" : "logminer",
     "database.password" : "logminer",
