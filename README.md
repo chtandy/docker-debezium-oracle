@@ -77,23 +77,24 @@ When the snapshot mode is set to the default, the connector completes the follow
 - or
 ```
 curl -H "Content-Type: application/json" -X POST -d  '{
-    "name": "source333", 
-    "config": {
-     "connector.class" : "io.debezium.connector.oracle.OracleConnector",
-     "tasks.max" : "1",
-     "database.server.name" : "oracle_service",
-     "database.hostname" : "localhost",
-     "database.port" : "1521",
-     "database.user" : "family",
-     "database.password" : "zyhcdc",
-     "database.dbname" : "helowin",
-     "table.include.list": "family.student_info",
-     "database.history.kafka.bootstrap.servers" : "localhost:9092",
-     "database.history.kafka.topic": "schema-changes.inventory222",
-     "event.processing.failure.handling.mode": "skip",
-     "log.mining.strategy":"online_catalog",
-     "database.serverTimezone":"UTC",
-     "database.serverTimezone":"Asia/Shanghai"
+     "name": "inventory-connector",
+     "config": {
+       "connector.class" : "io.debezium.connector.oracle.OracleConnector",
+       "tasks.max" : "1",
+       "database.server.name" : "it_oracle_server",
+       "database.hostname" : "10.90.1.207",
+       "database.port" : "1521",
+       "database.user" : "logminer",
+       "database.password" : "logminer",
+       "database.connection.adapter" : "logminer",
+       "database.history.kafka.bootstrap.servers" : "10.1.5.14:9093",
+       "database.history.kafka.topic": "oracle_history_topic",
+       "database.dbname" : "EMESHY",
+       "schema.include.list": "EMESP",
+       "table.include.list": "EMESP.TP_SN_LOG",
+       "log.mining.strategy":"online_catalog",
+       "event.processing.failure.handling.mode": "skip",
+       "snapshot.mode": "initial"
   }
 }' http://localhost:8083/connectors/
 ```
@@ -102,4 +103,10 @@ curl -H "Content-Type: application/json" -X POST -d  '{
 ```
 curl http://localhost:8083/connectors/source333/status
 ```
+
+### 注意事項
+- 經測試，1.8版本可以相容oracle 11g, 1.9會失敗
+- 第一次連接時，snapshot.mode要先設定成`initial`，等第一次全量備份完成後，在修改成`schema_only`做增量即可
+  - 若一直維持`initial` mode, 容器重啟時，會再重做全量備份
+- 第一次的全量備份，，kafka 會保留完整資料內容，故要注意fafka容量的問題
 
