@@ -1,7 +1,9 @@
 ### 參考來源
 - [Debezium Tutorial](https://github.com/debezium/debezium-examples/tree/main/tutorial)       
+- [適用於 Oracle 的 Debezium 連接器](https://debezium.io/documentation/reference/stable/connectors/oracle.html)  
 
 
+#以下為官方說明
 ### Using Oracle
 This assumes Oracle is running on localhost (or is reachable there, e.g. by means of running it within a VM or Docker container with appropriate port configurations) and set up with the configuration, users and grants described in the Debezium Vagrant set-up.
 ```
@@ -71,9 +73,14 @@ When the snapshot mode is set to the default, the connector completes the follow
 ### 使用方式
 - clone repo
 - modify register-oracle-logminer.json
-- docker-compose build
-- docker-compose up -d
-- `curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-oracle-logminer.json`
+  modify config:
+  - database.hostname
+  - database.history.kafka.bootstrap.servers
+  - database.dbname
+  - schema.include.list
+- cd <repo path> && run `docker-compose build`
+- run `docker-compose up -d`
+- run `curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-oracle-logminer.json`
 - or
 ```
 curl -H "Content-Type: application/json" -X POST -d  '{
@@ -101,12 +108,11 @@ curl -H "Content-Type: application/json" -X POST -d  '{
 
 - 查看任務狀況
 ```
-curl http://localhost:8083/connectors/source333/status
+curl http://localhost:8083/connectors/inventory-connector/status
 ```
 
 ### 注意事項
 - 經測試，1.8版本可以相容oracle 11g, 1.9會失敗
-- 第一次連接時，snapshot.mode要先設定成`initial`，等第一次全量備份完成後，在修改成`schema_only`做增量即可
-  - 若一直維持`initial` mode, 容器重啟時，會再重做全量備份
+- 第一次連接時，snapshot.mode要先設定成`initial`，等第一次全量備份完成後，在修改成`schema_only`做增量即可(選)
 - 第一次的全量備份，，kafka 會保留完整資料內容，故要注意fafka容量的問題
 
