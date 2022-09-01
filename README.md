@@ -1,7 +1,7 @@
 ### 參考來源
 - [Debezium Tutorial](https://github.com/debezium/debezium-examples/tree/main/tutorial)       
 - [適用於 Oracle 的 Debezium 連接器](https://debezium.io/documentation/reference/stable/connectors/oracle.html)  
-- [部署在kubernetes](https://debezium.io/documentation/reference/stable/operations/kubernetes.html)  
+- [在 Kubernetes 上部署 Debezium](https://debezium.io/documentation/reference/stable/operations/kubernetes.html)  
 
 #以下為官方說明
 ### Using Oracle
