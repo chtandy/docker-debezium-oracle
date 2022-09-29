@@ -1,7 +1,8 @@
 version: '2'
 services:
   connect:
-    image: debezium:${DEBEZIUM_VERSION}
+    #image: debezium:${DEBEZIUM_VERSION}
+    image: debezium/connect-with-oracle-jdbc:${DEBEZIUM_VERSION}
     build:
       context: ./
       args:
