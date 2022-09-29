@@ -15,6 +15,10 @@ services:
       - CONFIG_STORAGE_TOPIC=oracle_connect_configs
       - OFFSET_STORAGE_TOPIC=oracle_connect_offsets
       - STATUS_STORAGE_TOPIC=oracle_connect_statuses
+      - LD_LIBRARY_PATH=/instant_client
+      - KAFKA_DEBUG=true
+      - DEBUG_SUSPEND_FLAG=n
+      - JAVA_DEBUG_PORT=0.0.0.0:5005
       - OFFSET_FLUSH_INTERVAL_MS=10000
       - OFFSET_FLUSH_TIMEOUT_MS=3000
       - SHUTDOWN_TIMEOUT=5000
